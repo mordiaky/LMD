@@ -155,7 +155,7 @@ class TestCouplingEmergence:
 
     def test_valence_compatibility_matters(self, config):
         """Memories with compatible emotional arcs should couple."""
-        coupling = CouplingField(config)
+        CouplingField(config)
 
         content = torch.randn(config.content_dim)
 

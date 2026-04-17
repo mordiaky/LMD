@@ -671,7 +671,7 @@ class IdeaGrafter:
 
         # Remove old parent relation
         old_relation = None
-        for i, rel in enumerate(mutated.relations):
+        for _i, rel in enumerate(mutated.relations):
             if rel.target_id == source.id:
                 old_relation = rel
                 break
@@ -859,7 +859,7 @@ class HierarchicalIdeaFactory:
             for i in range(n_components - 1):
                 # Project embedding onto direction
                 projection = (embedding @ random_dirs[i]) * random_dirs[i]
-                residual = embedding - projection
+                embedding - projection
 
                 # Create component from projection + noise
                 comp_embedding = safe_normalize(projection + 0.3 * torch.randn(self.content_dim))

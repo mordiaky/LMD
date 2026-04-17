@@ -160,7 +160,7 @@ class ChaosMonitor:
         d0 = self._compute_separation(memories, memories_pert)
         separations.append(d0)
 
-        for step in range(n_steps):
+        for _step in range(n_steps):
             # Evolve both systems
             dynamics.step(memories)
             dynamics_pert.step(memories_pert)

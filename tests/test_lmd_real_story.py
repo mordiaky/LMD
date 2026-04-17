@@ -301,7 +301,7 @@ class TestLongRunBehavior:
         dynamics = LMDDynamics(config)
 
         initial_energies = [m.energy for m in encoded_story.memories]
-        initial_phases = [m.phase for m in encoded_story.memories]
+        [m.phase for m in encoded_story.memories]
 
         # Run for 1000 steps
         for step in range(1000):
@@ -396,7 +396,7 @@ class TestIntegration:
 
         # Run simulation
         print("\n2. Simulation (200 steps):")
-        for step in range(200):
+        for _step in range(200):
             dynamics.step(story.memories)
 
         alive = sum(1 for m in story.memories if m.is_alive)

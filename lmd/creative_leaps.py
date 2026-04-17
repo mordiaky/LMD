@@ -995,11 +995,11 @@ class CreativeLeapEngine:
             }
 
             for leap_type in LeapType:
-                type_leaps = [(l, q) for l, q in self.leap_history if l.leap_type == leap_type]
+                type_leaps = [(leap, q) for leap, q in self.leap_history if leap.leap_type == leap_type]
                 if type_leaps:
                     qualities = [q for _, q in type_leaps]
-                    novelties = [l.novelty_score for l, _ in type_leaps]
-                    distances = [l.leap_distance for l, _ in type_leaps]
+                    novelties = [leap.novelty_score for leap, _ in type_leaps]
+                    distances = [leap.leap_distance for leap, _ in type_leaps]
 
                     stats["per_type_stats"][leap_type.name] = {
                         "count": len(type_leaps),

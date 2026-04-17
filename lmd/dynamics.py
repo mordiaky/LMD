@@ -99,10 +99,10 @@ class LMDDynamics:
             }
 
         # === 1. Compute Coupling ===
-        coupling_matrix = self.coupling.compute_coupling(memories)
+        self.coupling.compute_coupling(memories)
 
         # === 2. Narrative Flow (Phase Advancement) ===
-        for i, memory in enumerate(memories):
+        for _i, memory in enumerate(memories):
             if memory.is_alive:
                 # Base velocity
                 velocity = self.config.narrative_velocity
@@ -122,7 +122,7 @@ class LMDDynamics:
                 memory.advance_phase(velocity * dt)
 
         # === 3. Valence Resonance ===
-        for i, memory in enumerate(memories):
+        for _i, memory in enumerate(memories):
             if memory.is_alive:
                 valence_force, _ = self.coupling.compute_resonance_force(memory, memories)
                 # Valence resonance doesn't change trajectory, but affects current emotional state

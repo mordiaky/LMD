@@ -1023,7 +1023,7 @@ class TestEchoChamberPrevention:
 
         # Run multiple sessions
         all_embeddings = []
-        for session in range(5):
+        for _session in range(5):
             result = engine.ideate(memories)
             for idea in result.ideas:
                 all_embeddings.append(idea.to_embedding(config.content_dim))

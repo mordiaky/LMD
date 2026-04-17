@@ -233,7 +233,7 @@ class LMDToySystem:
         """
         history = []
 
-        for step in range(n_steps):
+        for _step in range(n_steps):
             # Random activations
             activations = {}
             for m in self.memories:

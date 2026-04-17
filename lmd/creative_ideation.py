@@ -13,6 +13,7 @@ This enables human-like creative leaps:
 Invented by Joshua R. Thomas, January 2026.
 """
 
+import math
 import threading
 import time
 from dataclasses import dataclass, field
@@ -707,7 +708,3 @@ def run_creative_ideation_demo(n_rounds: int = 5, verbose: bool = True) -> Creat
             print(f"  {strat}: {count}")
 
     return all_results[-1] if all_results else None
-
-
-# Required import for demo
-import math

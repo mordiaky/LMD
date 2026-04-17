@@ -14,7 +14,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 import torch
 
@@ -200,8 +199,8 @@ class LivingMemory:
     activation_count: int = 0       # Total activations
 
     # Optional context
-    label: Optional[str] = None     # Human-readable label
-    source: Optional[str] = None    # Where memory came from
+    label: str | None = None     # Human-readable label
+    source: str | None = None    # Where memory came from
 
     def __post_init__(self):
         """Ensure content is a tensor."""

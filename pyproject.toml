@@ -94,9 +94,15 @@ ignore = [
     "E501",   # Line too long - handled by black
     "N803",   # Non-lowercase arg names — math/physics code uses single-caps (N, R, M)
     "N806",   # Non-lowercase variables — same reason as N803
+    "N812",   # `import torch.nn.functional as F` is universal PyTorch convention
     "UP006",  # Use list[] instead of List[] — we still support py3.9 in classifiers
     "UP035",  # Deprecated typing imports — paired with UP006
 ]
+
+[tool.ruff.lint.per-file-ignores]
+# __init__.py files re-export symbols for the public API; ruff can't
+# see that downstream consumers import from here.
+"__init__.py" = ["F401"]
 
 [tool.mypy]
 python_version = "3.9"

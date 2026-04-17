@@ -189,7 +189,7 @@ class MemoryMetabolism:
         frontier = [seed_memory]
         visited = {seed_memory.id}
 
-        for hop in range(max_hops):
+        for _hop in range(max_hops):
             current_strength *= decay_per_hop
             if current_strength < 0.1:
                 break

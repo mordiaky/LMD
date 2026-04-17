@@ -674,7 +674,7 @@ class TestCuriosityDrivenWill:
         wills = will_gen.batch_wills(sample_embeddings, n_wills=5, dopamine=0.5)
 
         assert len(wills) == 5
-        for will, probe in wills:
+        for will, _probe in wills:
             assert will.shape == (content_dim,)
 
 

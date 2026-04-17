@@ -359,7 +359,7 @@ def run_long_running_demo(
 
     while time.time() - start_time < duration_seconds:
         # Simulate heartbeat pulse
-        result = ideator.on_heartbeat(
+        ideator.on_heartbeat(
             memories,
             dopamine=dopamine,
             external_input=False

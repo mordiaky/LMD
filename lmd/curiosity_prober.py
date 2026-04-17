@@ -202,7 +202,7 @@ class ActiveCuriosityProber:
 
             # Find furthest point in this direction
             max_idx = projections.argmax()
-            furthest = stacked[max_idx]
+            stacked[max_idx]
             max_proj = projections[max_idx].item()
 
             # Extend beyond by frontier_margin
