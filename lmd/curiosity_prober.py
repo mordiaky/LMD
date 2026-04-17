@@ -11,15 +11,14 @@ This turns curiosity into systematic discovery of novel basins.
 Invented by Joshua R. Thomas, January 2026.
 """
 
-import torch
-import torch.nn.functional as F
-from typing import List, Tuple, Optional, Dict, Any
-from dataclasses import dataclass, field
-from enum import Enum, auto
 import threading
-import math
+from dataclasses import dataclass
+from enum import Enum, auto
+from typing import Any, Dict, List, Optional, Tuple
 
-from .safeguards import safe_normalize, safe_divide, EPS, RepulsionField
+import torch
+
+from .safeguards import EPS, RepulsionField, safe_normalize
 
 
 class ProbeStrategy(Enum):

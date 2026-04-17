@@ -8,11 +8,10 @@ These kernels provide GPU-accelerated implementations of:
 - Fused memory stepping
 """
 
+
 import torch
 import triton
 import triton.language as tl
-import math
-
 
 # ============================================================================
 # Pairwise Cosine Similarity Kernel

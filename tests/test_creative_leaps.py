@@ -12,44 +12,41 @@ Tests the advanced divergence operators that enable human-like creative jumps:
 Invented by Joshua R. Thomas, January 2026.
 """
 
+import threading
+import time
+
 import pytest
 import torch
-import time
-import threading
-from typing import List
 
 from lmd import (
+    # Curiosity Prober
+    ActiveCuriosityProber,
+    AnalogicalTransfer,
+    ComponentType,
+    CreativeIdeationConfig,
+    # Creative Ideation
+    CreativeIdeationEngine,
+    CreativeLeapConfig,
     # Creative Leaps
     CreativeLeapEngine,
-    CreativeLeapConfig,
-    CreativeLeap,
-    LeapType,
-    AnalogicalTransfer,
-    ManifoldWalker,
-    OrthogonalComposer,
-    VoidExtrapolator,
+    CuriosityDrivenWill,
+    GraftOperation,
     # Hierarchical Ideas
     HierarchicalIdea,
     HierarchicalIdeaFactory,
-    IdeaGrafter,
     IdeaComponent,
-    ComponentType,
-    RelationType,
-    GraftOperation,
-    # Curiosity Prober
-    ActiveCuriosityProber,
-    CuriosityDrivenWill,
-    ProbeStrategy,
-    # Creative Ideation
-    CreativeIdeationEngine,
-    CreativeIdeationConfig,
     IdeaForm,
-    run_creative_ideation_demo,
+    IdeaGrafter,
+    LeapType,
     # Core LMD
     LivingMemory,
+    ManifoldWalker,
+    OrthogonalComposer,
+    ProbeStrategy,
+    RelationType,
     ValenceTrajectory,
-    LMDConfig,
-    RepulsionField
+    VoidExtrapolator,
+    run_creative_ideation_demo,
 )
 
 

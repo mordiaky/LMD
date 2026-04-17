@@ -11,13 +11,13 @@ dE/dt = activation - decay + transfer - replay_cost
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Dict, Tuple
-import torch
-import math
+from typing import Dict, List, Tuple
 
-from .living_memory import LivingMemory, MetabolicState
-from .coupling import CouplingField
+import torch
+
 from .config import LMDConfig
+from .coupling import CouplingField
+from .living_memory import LivingMemory, MetabolicState
 
 
 class MemoryMetabolism:
@@ -246,7 +246,7 @@ class MemoryMetabolism:
         memories: List[LivingMemory]
     ) -> Dict[MetabolicState, int]:
         """Get count of memories in each metabolic state."""
-        distribution = {state: 0 for state in MetabolicState}
+        distribution = dict.fromkeys(MetabolicState, 0)
         for m in memories:
             distribution[m.metabolic_state] += 1
         return distribution

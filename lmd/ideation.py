@@ -14,47 +14,37 @@ its own ideas, its own brainstorming" - Joshua
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Dict, Optional, Tuple, Set, Any
-from dataclasses import dataclass, field
-from enum import Enum, auto
-import torch
-import math
 import random
-import copy
+from dataclasses import dataclass
+from enum import Enum, auto
+from typing import Any, Dict, List, Optional, Tuple
 
-from .living_memory import LivingMemory, ValenceTrajectory
+import torch
+
 from .config import LMDConfig
 from .dynamics import LMDDynamics
-from .coupling import CouplingField
 from .imagination import (
-    StructuredMemory,
-    MemorySlot,
-    SlotType,
-    Transform,
-    TransformType,
-    TransformOps,
-    WillVector,
-    WillGenerator,
-    MentalCanvas,
     MemoryDecomposer,
-    CanvasEntity
+    MemorySlot,
+    MentalCanvas,
+    SlotType,
+    StructuredMemory,
+    Transform,
+    TransformOps,
+    TransformType,
+    WillGenerator,
+    WillVector,
 )
-from .plausibility import (
-    PlausibilityField,
-    PlausibilityScore,
-    IdeaEvaluator,
-    CreativityOptimizer
-)
+from .living_memory import LivingMemory, ValenceTrajectory
+from .plausibility import CreativityOptimizer, IdeaEvaluator, PlausibilityField
 from .safeguards import (
-    IDGenerator,
-    get_id_generator,
-    RepulsionField,
-    RealityAnchor,
     AutonomyController,
     AutonomyTrigger,
+    RealityAnchor,
+    RepulsionField,
     ResourceBudget,
+    get_id_generator,
     safe_normalize,
-    EPS
 )
 
 

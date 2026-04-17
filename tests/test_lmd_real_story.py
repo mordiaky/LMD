@@ -11,22 +11,21 @@ This addresses the critique: "scale to real modalities"
 Invented by Joshua R. Thomas, January 2026.
 """
 
-import pytest
-import torch
 import math
 
+import pytest
+import torch
+
 from lmd import (
+    ChaosMonitor,
     LMDConfig,
     LMDDynamics,
-    StoryEncoder,
-    EncodedStory,
-    get_sample_story,
-    ChaosMonitor,
-    ChaosMetrics,
-    run_chaos_analysis,
     NarrativePredictor,
-    run_prediction_benchmark,
     NarrativeSynthesizer,
+    StoryEncoder,
+    get_sample_story,
+    run_chaos_analysis,
+    run_prediction_benchmark,
 )
 
 
@@ -144,7 +143,7 @@ class TestPredictionTask:
 
         comparison = predictor.compare_to_random(encoded_story, n_trials=20)
 
-        print(f"\nLMD vs Random Comparison:")
+        print("\nLMD vs Random Comparison:")
         print(f"  LMD score: {comparison['lmd_score']:.3f}")
         print(f"  Random mean: {comparison['random_mean_score']:.3f}")
         print(f"  Improvement ratio: {comparison['improvement_ratio']:.2f}x")
@@ -272,7 +271,7 @@ class TestChaosControl:
 
         chaos_metrics = run_chaos_analysis(dynamics, encoded_story.memories, n_steps=300)
 
-        print(f"\nEdge-of-Chaos Analysis:")
+        print("\nEdge-of-Chaos Analysis:")
         print(f"  Lyapunov: {chaos_metrics.lyapunov_exponent:.4f}")
         print(f"  Edge-of-chaos score: {chaos_metrics.edge_of_chaos_score:.3f}")
         print(f"  Stability score: {chaos_metrics.stability_score:.3f}")
@@ -315,7 +314,7 @@ class TestLongRunBehavior:
 
         final_energies = [m.energy for m in encoded_story.memories]
 
-        print(f"\n1000-Step Stability Test:")
+        print("\n1000-Step Stability Test:")
         print(f"  Initial mean energy: {sum(initial_energies)/len(initial_energies):.3f}")
         print(f"  Final mean energy: {sum(final_energies)/len(final_energies):.3f}")
         print(f"  Memories alive: {sum(1 for m in encoded_story.memories if m.is_alive)}")
@@ -335,7 +334,7 @@ class TestLongRunBehavior:
 
         final_total = sum(m.energy for m in encoded_story.memories)
 
-        print(f"\nEnergy Conservation:")
+        print("\nEnergy Conservation:")
         print(f"  Initial total: {initial_total:.3f}")
         print(f"  Final total: {final_total:.3f}")
         print(f"  Ratio: {final_total/initial_total:.3f}")
@@ -361,7 +360,7 @@ class TestLongRunBehavior:
             seed = max(alive_memories, key=lambda m: m.energy)
             narrative = synthesizer.generate_narrative(seed, alive_memories, target_length=5)
 
-            print(f"\nNarrative after 500 steps:")
+            print("\nNarrative after 500 steps:")
             print(f"  Frames: {len(narrative.frames)}")
             print(f"  Coherence: {narrative.coherence_score:.3f}")
             print(f"  Arc type: {narrative.arc_type}")
@@ -385,7 +384,7 @@ class TestIntegration:
         encoder = StoryEncoder(config)
         story = encoder.encode_story(get_sample_story("the_hero"), title="The Hero")
 
-        print(f"\n1. Story Encoding:")
+        print("\n1. Story Encoding:")
         print(f"   Sentences: {len(story.sentences)}")
         print(f"   Memories: {len(story.memories)}")
         print(f"   Valence range: [{min(story.valences):.2f}, {max(story.valences):.2f}]")
@@ -396,7 +395,7 @@ class TestIntegration:
         predictor = NarrativePredictor(config, dynamics, synthesizer)
 
         # Run simulation
-        print(f"\n2. Simulation (200 steps):")
+        print("\n2. Simulation (200 steps):")
         for step in range(200):
             dynamics.step(story.memories)
 
@@ -404,7 +403,7 @@ class TestIntegration:
         print(f"   Memories alive: {alive}/{len(story.memories)}")
 
         # Prediction
-        print(f"\n3. Prediction Task:")
+        print("\n3. Prediction Task:")
         # Re-encode for fresh prediction
         story_fresh = encoder.encode_story(get_sample_story("the_hero"))
         result = predictor.evaluate_prediction(story_fresh, context_ratio=0.6)
@@ -412,7 +411,7 @@ class TestIntegration:
         print(f"   Generated arc: {result.generated_narrative.arc_type}")
 
         # Chaos analysis
-        print(f"\n4. Chaos Analysis:")
+        print("\n4. Chaos Analysis:")
         story_fresh2 = encoder.encode_story(get_sample_story("the_hero"))
         dynamics2 = LMDDynamics(config)
         chaos = run_chaos_analysis(dynamics2, story_fresh2.memories, n_steps=300)
@@ -421,7 +420,7 @@ class TestIntegration:
         print(f"   Edge-of-chaos: {chaos.edge_of_chaos_score:.3f}")
 
         # Summary
-        print(f"\n5. Summary:")
+        print("\n5. Summary:")
         status_parts = []
         if chaos.is_stable:
             status_parts.append("STABLE")

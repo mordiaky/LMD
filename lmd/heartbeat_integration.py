@@ -8,17 +8,18 @@ The heartbeat provides the "tick" that drives spontaneous thinking.
 Invented by Joshua R. Thomas, January 2026.
 """
 
-import time
 import threading
-from typing import Optional, List, Callable, Dict, Any
+import time
 from dataclasses import dataclass, field
+from typing import Callable, Dict, List, Optional
+
 import torch
 
-from .living_memory import LivingMemory, ValenceTrajectory
 from .config import LMDConfig
 from .dynamics import LMDDynamics
-from .ideation import IdeationEngine, IdeationConfig, IdeationResult, AutonomousIdeator
-from .safeguards import AutonomyController, AutonomyTrigger, ResourceBudget
+from .ideation import AutonomousIdeator, IdeationResult
+from .living_memory import LivingMemory, ValenceTrajectory
+from .safeguards import AutonomyTrigger
 
 
 @dataclass

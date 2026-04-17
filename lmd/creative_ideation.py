@@ -13,28 +13,28 @@ This enables human-like creative leaps:
 Invented by Joshua R. Thomas, January 2026.
 """
 
-import torch
-import torch.nn.functional as F
-from typing import List, Tuple, Optional, Dict, Any, Union
-from dataclasses import dataclass, field
-from enum import Enum, auto
 import threading
 import time
+from dataclasses import dataclass, field
+from enum import Enum, auto
+from typing import Any, Dict, List, Optional
 
-from .safeguards import safe_normalize, safe_divide, EPS, RepulsionField, RealityAnchor
-from .living_memory import LivingMemory
+import torch
+import torch.nn.functional as F
+
 from .config import LMDConfig
-from .creative_leaps import (
-    CreativeLeapEngine, CreativeLeapConfig, CreativeLeap, LeapType
-)
+from .creative_leaps import CreativeLeap, CreativeLeapConfig, CreativeLeapEngine
+from .curiosity_prober import ActiveCuriosityProber, CuriosityDrivenWill
 from .hierarchical_ideas import (
-    HierarchicalIdea, HierarchicalIdeaFactory, IdeaGrafter,
-    IdeaComponent, ComponentType, GraftResult
+    ComponentType,
+    HierarchicalIdea,
+    HierarchicalIdeaFactory,
+    IdeaComponent,
+    IdeaGrafter,
 )
-from .curiosity_prober import (
-    ActiveCuriosityProber, CuriosityDrivenWill, ProbeResult, ProbeStrategy
-)
+from .living_memory import LivingMemory
 from .plausibility import PlausibilityField
+from .safeguards import RealityAnchor, RepulsionField, safe_normalize
 
 
 class IdeaForm(Enum):
@@ -403,7 +403,7 @@ class CreativeIdeationEngine:
         # For hierarchical ideas, convert to structured format
         if idea.form == IdeaForm.HIERARCHICAL and idea.hierarchical:
             # Create structured memory from hierarchical idea
-            from .imagination import StructuredMemory, MemorySlot, SlotType
+            from .imagination import MemorySlot, SlotType, StructuredMemory
             slots = {}
             for comp_id, comp in idea.hierarchical.components.items():
                 # Map ComponentType to SlotType
@@ -533,7 +533,7 @@ class CreativeIdeationEngine:
 
         # Learn from good ideas
         if filtered_ideas:
-            from .imagination import StructuredMemory, MemorySlot, SlotType
+            from .imagination import MemorySlot, SlotType, StructuredMemory
             for idea in filtered_ideas[:5]:  # Top 5
                 if idea.form == IdeaForm.HIERARCHICAL and idea.hierarchical:
                     slots = {}
@@ -587,7 +587,7 @@ class CreativeIdeationEngine:
         quality_threshold: float = 0.5
     ) -> List[LivingMemory]:
         """Convert high-quality ideas into living memories."""
-        from .living_memory import ValenceTrajectory, NarrativePhase
+        from .living_memory import NarrativePhase, ValenceTrajectory
 
         new_memories = []
 
@@ -702,7 +702,7 @@ def run_creative_ideation_demo(n_rounds: int = 5, verbose: bool = True) -> Creat
         print(f"Total sessions: {stats['session_count']}")
         print(f"Total ideas: {stats['total_ideas_generated']}")
         print(f"Final memory count: {len(memories)}")
-        print(f"\nStrategy usage:")
+        print("\nStrategy usage:")
         for strat, count in sorted(stats['strategy_history'].items(), key=lambda x: -x[1])[:5]:
             print(f"  {strat}: {count}")
 

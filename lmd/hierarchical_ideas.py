@@ -14,16 +14,17 @@ Store as small trees (depth 3-5), embed leaves, score whole.
 Invented by Joshua R. Thomas, January 2026.
 """
 
-import torch
-import torch.nn.functional as F
-from typing import List, Tuple, Optional, Dict, Any, Set
+import copy
+import threading
+import uuid
 from dataclasses import dataclass, field
 from enum import Enum, auto
-import threading
-import copy
-import uuid
+from typing import Any, Dict, List, Optional, Set
 
-from .safeguards import safe_normalize, safe_divide, EPS
+import torch
+import torch.nn.functional as F
+
+from .safeguards import EPS, safe_normalize
 
 
 class ComponentType(Enum):

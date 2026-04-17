@@ -3,8 +3,7 @@
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from dataclasses import dataclass, field
-from typing import Optional
+from dataclasses import dataclass
 
 
 @dataclass

@@ -4,9 +4,10 @@ These are used when Triton is not available. They provide the same API
 but run on CPU or use standard PyTorch CUDA operations.
 """
 
+from typing import Optional
+
 import torch
 import torch.nn.functional as F
-from typing import Optional
 
 
 def batch_cosine_similarity(A: torch.Tensor, B: Optional[torch.Tensor] = None) -> torch.Tensor:

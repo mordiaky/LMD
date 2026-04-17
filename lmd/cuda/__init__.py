@@ -41,31 +41,31 @@ def get_device(prefer_cuda: bool = True) -> torch.device:
 
 # Import accelerated functions if available
 if TRITON_AVAILABLE:
-    from .kernels import (
-        batch_cosine_similarity,
-        batch_coupling,
-        density_estimation,
-        pairwise_distances,
-        void_probe_density,
-        memory_step_fused,
-    )
     from .batch_ops import (
         BatchCouplingComputer,
         BatchDensityEstimator,
         BatchMemoryStepper,
     )
-else:
-    # Fallback to pure PyTorch implementations
-    from .fallback import (
+    from .kernels import (
         batch_cosine_similarity,
         batch_coupling,
         density_estimation,
+        memory_step_fused,
         pairwise_distances,
         void_probe_density,
-        memory_step_fused,
+    )
+else:
+    # Fallback to pure PyTorch implementations
+    from .fallback import (
         BatchCouplingComputer,
         BatchDensityEstimator,
         BatchMemoryStepper,
+        batch_cosine_similarity,
+        batch_coupling,
+        density_estimation,
+        memory_step_fused,
+        pairwise_distances,
+        void_probe_density,
     )
 
 

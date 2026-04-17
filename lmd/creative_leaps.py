@@ -9,16 +9,17 @@ Add operators that mimic human associative jumps.
 Invented by Joshua R. Thomas, January 2026.
 """
 
-import torch
-import torch.nn.functional as F
-from typing import List, Tuple, Optional, Dict, Any, Callable
-from dataclasses import dataclass, field
-from enum import Enum, auto
-from abc import ABC, abstractmethod
 import math
 import threading
+from abc import ABC, abstractmethod
+from dataclasses import dataclass, field
+from enum import Enum, auto
+from typing import Any, Dict, List, Optional, Tuple
 
-from .safeguards import safe_normalize, safe_divide, EPS
+import torch
+import torch.nn.functional as F
+
+from .safeguards import EPS, safe_normalize
 
 
 class LeapType(Enum):

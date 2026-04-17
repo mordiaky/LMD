@@ -11,20 +11,15 @@ The Plausibility Field learns these constraints from memory patterns.
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Dict, Optional, Tuple, Set
-from dataclasses import dataclass, field
-import torch
 import math
 import threading
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Set, Tuple
 
+import torch
+
+from .imagination import SlotType, StructuredMemory, Transform, TransformType
 from .living_memory import LivingMemory
-from .imagination import (
-    StructuredMemory,
-    MemorySlot,
-    SlotType,
-    Transform,
-    TransformType
-)
 
 # Epsilon for numerical stability
 EPS = 1e-8

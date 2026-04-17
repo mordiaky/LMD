@@ -11,37 +11,36 @@ These tests validate Joshua's Imagination Extension to LMD:
 Invented by Joshua R. Thomas, January 2026.
 """
 
-import pytest
-import torch
 import math
 
+import pytest
+import torch
+
 from lmd import (
-    # Core
-    LivingMemory,
-    ValenceTrajectory,
-    LMDConfig,
-    LMDDynamics,
-    # Imagination
-    StructuredMemory,
-    MemorySlot,
-    SlotType,
-    Transform,
-    TransformType,
-    TransformOps,
-    WillVector,
-    WillGenerator,
-    MentalCanvas,
-    MemoryDecomposer,
-    # Plausibility
-    PlausibilityField,
-    PlausibilityScore,
+    AutonomousIdeator,
     IdeaEvaluator,
-    CreativityOptimizer,
+    IdeationConfig,
     # Ideation
     IdeationEngine,
-    IdeationConfig,
     IdeationResult,
-    AutonomousIdeator,
+    # Core
+    LivingMemory,
+    LMDConfig,
+    LMDDynamics,
+    MemoryDecomposer,
+    MemorySlot,
+    MentalCanvas,
+    # Plausibility
+    PlausibilityField,
+    SlotType,
+    # Imagination
+    StructuredMemory,
+    Transform,
+    TransformOps,
+    TransformType,
+    ValenceTrajectory,
+    WillGenerator,
+    WillVector,
     run_ideation_demo,
 )
 
@@ -782,9 +781,7 @@ class TestSafeguards:
 
     def test_id_generator_no_collisions(self):
         """ID generator should never produce collisions."""
-        from lmd import (
-            IDGenerator, reset_id_generator
-        )
+        from lmd import IDGenerator, reset_id_generator
 
         # Reset for clean test
         reset_id_generator(0)
@@ -928,10 +925,8 @@ class TestSafeguards:
 
     def test_autonomy_triggers_work(self):
         """Autonomy triggers should fire at thresholds."""
-        from lmd import (
-            AutonomyController, AutonomyTrigger
-        )
-        import time
+
+        from lmd import AutonomyController, AutonomyTrigger
 
         controller = AutonomyController(min_interval_seconds=0.0)
 
@@ -1047,8 +1042,8 @@ class TestEchoChamberPrevention:
 
     def test_repulsion_decays_over_time(self, config):
         """Repulsion should decay, allowing revisiting with fresh perspective."""
+
         from lmd import RepulsionField
-        import time
 
         repulsion = RepulsionField(content_dim=config.content_dim, decay_rate=0.5)
 
@@ -1332,6 +1327,7 @@ class TestThreadSafety:
     def test_id_generator_thread_safe(self):
         """ID generator should be thread-safe under concurrent access."""
         import threading
+
         from lmd import IDGenerator
 
         gen = IDGenerator()
@@ -1361,6 +1357,7 @@ class TestThreadSafety:
     def test_repulsion_field_thread_safe(self, config):
         """Repulsion field should be thread-safe."""
         import threading
+
         from lmd import RepulsionField
 
         repulsion = RepulsionField(config.content_dim)
@@ -1390,6 +1387,7 @@ class TestThreadSafety:
     def test_reality_anchor_thread_safe(self, config):
         """Reality anchor should be thread-safe."""
         import threading
+
         from lmd import RealityAnchor
 
         anchor = RealityAnchor(config.content_dim)
@@ -1426,7 +1424,6 @@ class TestPersistence:
 
     def test_id_generator_persistence(self, tmp_path):
         """ID generator should persist and recover state."""
-        import json
         from lmd import IDGenerator
 
         persistence_path = str(tmp_path / "id_state.json")

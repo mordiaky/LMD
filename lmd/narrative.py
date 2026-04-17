@@ -12,15 +12,13 @@ This creates an "internal movie" - a living story built from memory fragments.
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Tuple, Optional, Dict
 from dataclasses import dataclass
-import torch
-import math
+from typing import Dict, List
 
-from .living_memory import LivingMemory, ValenceTrajectory, NarrativePhase
-from .coupling import CouplingField
-from .metabolism import MemoryMetabolism
 from .config import LMDConfig
+from .coupling import CouplingField
+from .living_memory import LivingMemory
+from .metabolism import MemoryMetabolism
 
 
 @dataclass

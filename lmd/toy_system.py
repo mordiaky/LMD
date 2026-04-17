@@ -9,18 +9,17 @@ This module provides:
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Dict, Optional, Tuple
-from dataclasses import dataclass, field
-import torch
 import math
 import random
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
 
-from .living_memory import LivingMemory, ValenceTrajectory, NarrativePhase, MetabolicState
+import torch
+
 from .config import LMDConfig
 from .dynamics import LMDDynamics
-from .coupling import CouplingField
-from .metabolism import MemoryMetabolism
-from .narrative import NarrativeSynthesizer, GeneratedNarrative
+from .living_memory import LivingMemory, ValenceTrajectory
+from .narrative import GeneratedNarrative, NarrativeSynthesizer
 
 
 @dataclass
@@ -425,7 +424,7 @@ class LMDToySystem:
 
     def print_status(self):
         """Print current system status."""
-        print(f"\n=== LMD Toy System Status ===")
+        print("\n=== LMD Toy System Status ===")
         print(f"Memories: {len(self.memories)}")
         print(f"Timestep: {self.dynamics.timestep}")
 
@@ -434,12 +433,12 @@ class LMDToySystem:
             print(f"Alive: {summary['alive_memories']}/{summary['total_memories']}")
             print(f"Phase coherence: {summary['phase_coherence']:.3f}")
 
-            print(f"\nNarrative distribution:")
+            print("\nNarrative distribution:")
             for phase, count in summary['narrative_distribution'].items():
                 if count > 0:
                     print(f"  {phase}: {count}")
 
-            print(f"\nMetabolism:")
+            print("\nMetabolism:")
             for state, count in summary['metabolism']['state_distribution'].items():
                 if count > 0:
                     print(f"  {state}: {count}")

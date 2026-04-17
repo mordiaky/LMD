@@ -10,15 +10,15 @@ This validates that LMD isn't just storing - it's GENERATING.
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Tuple, Optional, Dict
 from dataclasses import dataclass
-import torch
-import math
+from typing import Dict, List, Optional
 
-from .living_memory import LivingMemory, ValenceTrajectory, NarrativePhase
+import torch
+
 from .config import LMDConfig
 from .dynamics import LMDDynamics
-from .narrative import NarrativeSynthesizer, GeneratedNarrative
+from .living_memory import LivingMemory
+from .narrative import GeneratedNarrative, NarrativeSynthesizer
 from .story_encoder import EncodedStory
 
 

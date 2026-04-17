@@ -11,15 +11,22 @@ Features:
 Invented by Joshua R. Thomas, January 2026.
 """
 
-import torch
-import torch.nn.functional as F
-from typing import List, Dict, Optional, Tuple, Union, Any
-from dataclasses import dataclass, field
-from enum import Enum
+import hashlib
 import json
 import threading
+from dataclasses import dataclass, field
+from enum import Enum
 from pathlib import Path
-import hashlib
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Tuple, Union
+
+import torch
+import torch.nn.functional as F
+
+if TYPE_CHECKING:
+    # Forward-ref annotations only; the runtime import is deferred to inside
+    # ground_memory() / ground_memories() to avoid a circular import with
+    # lmd.living_memory.
+    from .living_memory import LivingMemory
 
 # Optional imports - graceful degradation
 SENTENCE_TRANSFORMERS_AVAILABLE = False
@@ -179,7 +186,7 @@ class TextCorpus:
     def load(self, path: str):
         """Load corpus from disk."""
         with self._lock:
-            with open(path, 'r') as f:
+            with open(path) as f:
                 data = json.load(f)
             self.texts = data["texts"]
             self.metadata = data["metadata"]
@@ -505,7 +512,6 @@ class LanguageGrounding:
         Returns:
             GroundedText with decoded text
         """
-        from .living_memory import LivingMemory
 
         decoded = self.decode(memory.content)
 

@@ -11,21 +11,17 @@ Addresses critical issues:
 "The brain needs guardrails, not just gas pedals" - Joshua, January 2026.
 """
 
-from typing import List, Dict, Optional, Set, Tuple, Callable, Any
+import json
+import math
+import os
+import threading
+import time
+from collections import deque
 from dataclasses import dataclass, field
 from enum import Enum, auto
+from typing import Any, Callable, Dict, List, Optional, Set, Tuple
+
 import torch
-import math
-import time
-import threading
-import json
-import os
-from collections import deque
-from pathlib import Path
-
-from .living_memory import LivingMemory, ValenceTrajectory
-from .config import LMDConfig
-
 
 # Epsilon for numerical stability
 EPS = 1e-8
@@ -169,7 +165,7 @@ class IDGenerator:
         if not self._persistence_path:
             return
         try:
-            with open(self._persistence_path, 'r') as f:
+            with open(self._persistence_path) as f:
                 state = json.load(f)
             self.load_state(state)
         except Exception:

@@ -9,23 +9,19 @@ These tests validate Joshua's LMD invention by measuring:
 Invented by Joshua R. Thomas, January 2026.
 """
 
+import math
+
 import pytest
 import torch
-import math
-import random
 
 from lmd import (
-    LivingMemory,
-    ValenceTrajectory,
-    NarrativePhase,
-    MetabolicState,
-    LMDConfig,
-    LMDDynamics,
     CouplingField,
-    MemoryMetabolism,
-    NarrativeSynthesizer,
+    LivingMemory,
+    LMDConfig,
     LMDToySystem,
-    LMDMetrics,
+    MetabolicState,
+    NarrativePhase,
+    ValenceTrajectory,
 )
 
 
@@ -355,24 +351,24 @@ class TestFullValidationExperiment:
         print(f"\n{'='*60}")
         print("LMD VALIDATION EXPERIMENT RESULTS")
         print(f"{'='*60}")
-        print(f"\nConfiguration:")
+        print("\nConfiguration:")
         print(f"  Memories: {results['config']['n_memories']}")
         print(f"  Steps: {results['config']['n_steps']}")
         print(f"  Content dim: {results['config']['content_dim']}")
 
-        print(f"\nFinal State:")
+        print("\nFinal State:")
         print(f"  Alive: {results['final_state']['alive_memories']}/{results['final_state']['total_memories']}")
         print(f"  Phase coherence: {results['final_state']['phase_coherence']:.3f}")
 
-        print(f"\nMetrics:")
+        print("\nMetrics:")
         for k, v in results['metrics'].items():
             print(f"  {k}: {v:.4f}" if isinstance(v, float) else f"  {k}: {v}")
 
-        print(f"\nNarratives Generated:")
+        print("\nNarratives Generated:")
         for i, n in enumerate(results['narratives']):
             print(f"  {i+1}. Length={n['length']}, coherence={n['coherence']:.3f}, arc={n['arc_type']}")
 
-        print(f"\nValidation:")
+        print("\nValidation:")
         for k, v in results['validation'].items():
             status = "PASS" if v else "FAIL"
             print(f"  {k}: {status}")

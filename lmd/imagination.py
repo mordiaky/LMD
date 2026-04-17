@@ -13,16 +13,14 @@ Key insight: "The I WANT part is the Key thing" - Joshua
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Dict, Optional, Tuple, Any, Set
 from dataclasses import dataclass, field
 from enum import Enum, auto
-import torch
-import math
-import random
-import copy
+from typing import Any, Dict, List, Optional, Set, Tuple
 
-from .living_memory import LivingMemory, ValenceTrajectory
-from .safeguards import safe_normalize, safe_divide, EPS
+import torch
+
+from .living_memory import LivingMemory
+from .safeguards import EPS, safe_divide, safe_normalize
 
 
 class SlotType(Enum):

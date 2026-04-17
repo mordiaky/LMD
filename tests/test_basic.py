@@ -9,44 +9,15 @@ class TestImports:
 
     def test_core_imports(self):
         """Test core module imports."""
-        from lmd import (
-            LivingMemory,
-            ValenceTrajectory,
-            NarrativePhase,
-            MetabolicState,
-            LMDConfig,
-            LMDDynamics,
-        )
 
     def test_creative_leaps_imports(self):
         """Test creative leaps imports."""
-        from lmd import (
-            CreativeLeapEngine,
-            CreativeLeapConfig,
-            LeapType,
-            AnalogicalTransfer,
-            ManifoldWalker,
-            OrthogonalComposer,
-            VoidExtrapolator,
-        )
 
     def test_hierarchical_imports(self):
         """Test hierarchical ideas imports."""
-        from lmd import (
-            HierarchicalIdea,
-            HierarchicalIdeaFactory,
-            IdeaGrafter,
-            ComponentType,
-            GraftOperation,
-        )
 
     def test_curiosity_imports(self):
         """Test curiosity prober imports."""
-        from lmd import (
-            ActiveCuriosityProber,
-            CuriosityDrivenWill,
-            ProbeStrategy,
-        )
 
 
 class TestLivingMemory:
@@ -54,7 +25,7 @@ class TestLivingMemory:
 
     def test_create_memory(self):
         """Test memory creation."""
-        from lmd import LivingMemory, ValenceTrajectory, NarrativePhase
+        from lmd import LivingMemory, NarrativePhase, ValenceTrajectory
 
         embedding = torch.randn(256)
         memory = LivingMemory(

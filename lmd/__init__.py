@@ -19,111 +19,103 @@ Where:
     eta(t) = Creative Noise (generative stochasticity)
 """
 
-from .living_memory import LivingMemory, ValenceTrajectory, NarrativePhase, MetabolicState
+from .chaos_monitor import ChaosMetrics, ChaosMonitor, run_chaos_analysis
 from .config import LMDConfig
-from .dynamics import LMDDynamics
 from .coupling import CouplingField
-from .metabolism import MemoryMetabolism
-from .narrative import NarrativeSynthesizer, GeneratedNarrative
-from .toy_system import LMDToySystem, LMDMetrics
-from .story_encoder import StoryEncoder, EncodedStory, get_sample_story
-from .chaos_monitor import ChaosMonitor, ChaosMetrics, run_chaos_analysis
-from .prediction import NarrativePredictor, PredictionResult, run_prediction_benchmark
-from .imagination import (
-    StructuredMemory,
-    MemorySlot,
-    SlotType,
-    Transform,
-    TransformType,
-    TransformOps,
-    WillVector,
-    WillGenerator,
-    MentalCanvas,
-    MemoryDecomposer,
-    CanvasEntity
+from .creative_ideation import (
+    CreativeIdea,
+    CreativeIdeationConfig,
+    CreativeIdeationEngine,
+    CreativeIdeationResult,
+    IdeaForm,
+    run_creative_ideation_demo,
 )
-from .plausibility import (
-    PlausibilityField,
-    PlausibilityScore,
-    IdeaEvaluator,
-    CreativityOptimizer
-)
-from .ideation import (
-    IdeationEngine,
-    IdeationConfig,
-    IdeationResult,
-    IdeationPhase,
-    AutonomousIdeator,
-    run_ideation_demo
-)
-from .safeguards import (
-    IDGenerator,
-    get_id_generator,
-    reset_id_generator,
-    RepulsionField,
-    ExploredRegion,
-    RealityAnchor,
-    AutonomyController,
-    AutonomyTrigger,
-    TriggerCondition,
-    ResourceBudget
-)
-from .heartbeat_integration import (
-    HeartbeatIdeator,
-    HeartbeatIdeationMetrics,
-    run_long_running_demo
-)
+
 # Note: Benchmarks moved to separate benchmarks/ folder
 # from benchmarks import LMDBenchmarks, run_benchmarks, BenchmarkSuite, TimingResult
 from .creative_leaps import (
-    CreativeLeapEngine,
-    CreativeLeapConfig,
-    CreativeLeap,
-    LeapType,
-    LeapOperator,
     AnalogicalTransfer,
+    CreativeLeap,
+    CreativeLeapConfig,
+    CreativeLeapEngine,
+    LeapOperator,
+    LeapType,
     ManifoldWalker,
     OrthogonalComposer,
-    VoidExtrapolator
-)
-from .hierarchical_ideas import (
-    HierarchicalIdea,
-    HierarchicalIdeaFactory,
-    IdeaGrafter,
-    IdeaComponent,
-    ComponentType,
-    RelationType,
-    ComponentRelation,
-    GraftOperation,
-    GraftResult
+    VoidExtrapolator,
 )
 from .curiosity_prober import (
     ActiveCuriosityProber,
     CuriosityDrivenWill,
     ProbeResult,
     ProbeStrategy,
-    VoidRegion
+    VoidRegion,
 )
-from .creative_ideation import (
-    CreativeIdeationEngine,
-    CreativeIdeationConfig,
-    CreativeIdeationResult,
-    CreativeIdea,
-    IdeaForm,
-    run_creative_ideation_demo
+from .dynamics import LMDDynamics
+from .heartbeat_integration import HeartbeatIdeationMetrics, HeartbeatIdeator, run_long_running_demo
+from .hierarchical_ideas import (
+    ComponentRelation,
+    ComponentType,
+    GraftOperation,
+    GraftResult,
+    HierarchicalIdea,
+    HierarchicalIdeaFactory,
+    IdeaComponent,
+    IdeaGrafter,
+    RelationType,
+)
+from .ideation import (
+    AutonomousIdeator,
+    IdeationConfig,
+    IdeationEngine,
+    IdeationPhase,
+    IdeationResult,
+    run_ideation_demo,
+)
+from .imagination import (
+    CanvasEntity,
+    MemoryDecomposer,
+    MemorySlot,
+    MentalCanvas,
+    SlotType,
+    StructuredMemory,
+    Transform,
+    TransformOps,
+    TransformType,
+    WillGenerator,
+    WillVector,
 )
 from .language_grounding import (
-    LanguageGrounding,
-    GroundingConfig,
-    EncoderType,
-    TextCorpus,
-    GroundedText,
-    RetrievalResult,
-    CreativeLeapDescription,
-    LLMDescriber,
-    create_grounding,
     SENTENCE_TRANSFORMERS_AVAILABLE,
+    CreativeLeapDescription,
+    EncoderType,
+    GroundedText,
+    GroundingConfig,
+    LanguageGrounding,
+    LLMDescriber,
+    RetrievalResult,
+    TextCorpus,
+    create_grounding,
 )
+from .living_memory import LivingMemory, MetabolicState, NarrativePhase, ValenceTrajectory
+from .metabolism import MemoryMetabolism
+from .narrative import GeneratedNarrative, NarrativeSynthesizer
+from .plausibility import CreativityOptimizer, IdeaEvaluator, PlausibilityField, PlausibilityScore
+from .prediction import NarrativePredictor, PredictionResult, run_prediction_benchmark
+from .safeguards import (
+    AutonomyController,
+    AutonomyTrigger,
+    ExploredRegion,
+    IDGenerator,
+    RealityAnchor,
+    RepulsionField,
+    ResourceBudget,
+    TriggerCondition,
+    get_id_generator,
+    reset_id_generator,
+)
+from .story_encoder import EncodedStory, StoryEncoder, get_sample_story
+from .toy_system import LMDMetrics, LMDToySystem
 
 __all__ = [
     # Core
@@ -244,12 +236,12 @@ __all__ = [
 try:
     from . import cuda
     from .cuda import (
-        is_cuda_available,
-        get_device,
         TRITON_AVAILABLE,
         BatchCouplingComputer,
         BatchDensityEstimator,
         BatchMemoryStepper,
+        get_device,
+        is_cuda_available,
     )
     __all__.extend([
         "cuda",

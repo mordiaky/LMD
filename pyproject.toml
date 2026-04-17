@@ -86,8 +86,16 @@ target-version = ["py39", "py310", "py311", "py312"]
 
 [tool.ruff]
 line-length = 100
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
-ignore = ["E501"]  # Line too long - handled by black
+ignore = [
+    "E501",   # Line too long - handled by black
+    "N803",   # Non-lowercase arg names — math/physics code uses single-caps (N, R, M)
+    "N806",   # Non-lowercase variables — same reason as N803
+    "UP006",  # Use list[] instead of List[] — we still support py3.9 in classifiers
+    "UP035",  # Deprecated typing imports — paired with UP006
+]
 
 [tool.mypy]
 python_version = "3.9"

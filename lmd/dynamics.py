@@ -12,14 +12,15 @@ Where:
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Dict, Optional, Tuple
-import torch
 import math
+from typing import Dict, List, Optional
 
-from .living_memory import LivingMemory, ValenceTrajectory, NarrativePhase
-from .coupling import CouplingField
-from .metabolism import MemoryMetabolism
+import torch
+
 from .config import LMDConfig
+from .coupling import CouplingField
+from .living_memory import LivingMemory, NarrativePhase
+from .metabolism import MemoryMetabolism
 
 
 class LMDDynamics:
@@ -226,7 +227,7 @@ class LMDDynamics:
         memories: List[LivingMemory]
     ) -> Dict[NarrativePhase, int]:
         """Get distribution of memories across narrative phases."""
-        distribution = {phase: 0 for phase in NarrativePhase}
+        distribution = dict.fromkeys(NarrativePhase, 0)
         for m in memories:
             if m.is_alive:
                 distribution[m.narrative_phase] += 1

@@ -10,15 +10,15 @@ This allows testing LMD on REAL data, not synthetic.
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Tuple, Optional, Dict
-from dataclasses import dataclass
-import torch
 import math
 import re
+from dataclasses import dataclass
+from typing import Dict, List, Optional
 
-from .living_memory import LivingMemory, ValenceTrajectory, NarrativePhase
+import torch
+
 from .config import LMDConfig
-
+from .living_memory import LivingMemory, ValenceTrajectory
 
 # Simple sentiment lexicon for valence extraction
 # In production, use a proper sentiment model

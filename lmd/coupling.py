@@ -10,12 +10,13 @@ Gamma_ij = sim(c_i, c_j) * valence_compat(v_i, v_j) * phase_align(phi_i, phi_j)
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Tuple, Optional
-import torch
 import math
+from typing import List, Optional, Tuple
 
-from .living_memory import LivingMemory
+import torch
+
 from .config import LMDConfig
+from .living_memory import LivingMemory
 
 
 class CouplingField:

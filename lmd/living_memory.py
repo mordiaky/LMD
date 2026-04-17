@@ -10,11 +10,13 @@ Invented by Joshua R. Thomas, January 2026.
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Optional, List, Tuple
-from enum import Enum
-import torch
+
 import math
+from dataclasses import dataclass
+from enum import Enum
+from typing import Optional
+
+import torch
 
 
 class NarrativePhase(Enum):
@@ -30,7 +32,7 @@ class NarrativePhase(Enum):
     INTEGRATION = 4     # phi -> 2pi: Becomes part of self-narrative
 
     @classmethod
-    def from_phase(cls, phi: float) -> "NarrativePhase":
+    def from_phase(cls, phi: float) -> NarrativePhase:
         """Convert continuous phase to discrete narrative phase."""
         # Normalize to [0, 2pi)
         phi = phi % (2 * math.pi)
@@ -56,7 +58,7 @@ class MetabolicState(Enum):
     GHOST = "ghost"       # E <= 0.1: Only emotional residue remains
 
     @classmethod
-    def from_energy(cls, energy: float) -> "MetabolicState":
+    def from_energy(cls, energy: float) -> MetabolicState:
         """Determine metabolic state from energy level."""
         if energy > 1.0:
             return cls.VIVID
@@ -89,22 +91,22 @@ class ValenceTrajectory:
             self.points = torch.tensor(self.points, dtype=torch.float32)
 
     @classmethod
-    def constant(cls, valence: float, n_points: int = 5) -> "ValenceTrajectory":
+    def constant(cls, valence: float, n_points: int = 5) -> ValenceTrajectory:
         """Create a flat valence trajectory (static emotion)."""
         return cls(points=torch.full((n_points,), valence))
 
     @classmethod
-    def redemption(cls, start: float = -0.8, end: float = 0.6, n_points: int = 5) -> "ValenceTrajectory":
+    def redemption(cls, start: float = -0.8, end: float = 0.6, n_points: int = 5) -> ValenceTrajectory:
         """Create a redemption arc: negative -> positive."""
         return cls(points=torch.linspace(start, end, n_points))
 
     @classmethod
-    def tragedy(cls, start: float = 0.7, end: float = -0.5, n_points: int = 5) -> "ValenceTrajectory":
+    def tragedy(cls, start: float = 0.7, end: float = -0.5, n_points: int = 5) -> ValenceTrajectory:
         """Create a tragedy arc: positive -> negative."""
         return cls(points=torch.linspace(start, end, n_points))
 
     @classmethod
-    def climax(cls, low: float = 0.2, peak: float = 0.9, n_points: int = 5) -> "ValenceTrajectory":
+    def climax(cls, low: float = 0.2, peak: float = 0.9, n_points: int = 5) -> ValenceTrajectory:
         """Create a climax arc: builds to peak then resolves."""
         half = n_points // 2
         rising = torch.linspace(low, peak, half + 1)
@@ -112,7 +114,7 @@ class ValenceTrajectory:
         return cls(points=torch.cat([rising[:-1], falling]))
 
     @classmethod
-    def random(cls, n_points: int = 5, mean: float = 0.0, std: float = 0.5) -> "ValenceTrajectory":
+    def random(cls, n_points: int = 5, mean: float = 0.0, std: float = 0.5) -> ValenceTrajectory:
         """Create a random valence trajectory."""
         points = torch.randn(n_points) * std + mean
         return cls(points=torch.clamp(points, -1.0, 1.0))
@@ -245,7 +247,7 @@ class LivingMemory:
         """Apply metabolic decay."""
         self.energy *= decay_rate
 
-    def similarity(self, other: "LivingMemory") -> float:
+    def similarity(self, other: LivingMemory) -> float:
         """Compute content similarity with another memory."""
         # Cosine similarity
         dot = torch.dot(self.content, other.content)
@@ -254,7 +256,7 @@ class LivingMemory:
             return 0.0
         return (dot / norm).item()
 
-    def valence_compatibility(self, other: "LivingMemory") -> float:
+    def valence_compatibility(self, other: LivingMemory) -> float:
         """Compute emotional compatibility with another memory."""
         # Compare valence trajectories
         v1 = self.valence.points
@@ -282,7 +284,7 @@ class LivingMemory:
 
         return (numer / denom).item()
 
-    def phase_alignment(self, other: "LivingMemory") -> float:
+    def phase_alignment(self, other: LivingMemory) -> float:
         """Compute narrative phase alignment (0 = opposite, 1 = aligned)."""
         phase_diff = abs(self.phase - other.phase)
         # Wrap around
@@ -307,7 +309,7 @@ class LivingMemory:
         }
 
     @classmethod
-    def from_dict(cls, data: dict) -> "LivingMemory":
+    def from_dict(cls, data: dict) -> LivingMemory:
         """Deserialize from dictionary."""
         return cls(
             id=data["id"],

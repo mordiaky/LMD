@@ -6,31 +6,28 @@ These classes wrap the low-level kernels and provide:
 - Caching of intermediate results
 """
 
+from dataclasses import dataclass
+from typing import List, Optional, Tuple
+
 import torch
 import torch.nn.functional as F
-from typing import Optional, Tuple, List
-from dataclasses import dataclass
 
-from . import is_cuda_available, get_device
+from . import get_device, is_cuda_available
 
 # Import kernels based on availability
 if is_cuda_available():
     from .kernels import (
-        batch_cosine_similarity,
         batch_coupling,
         density_estimation,
-        pairwise_distances,
-        void_probe_density,
         memory_step_fused,
+        void_probe_density,
     )
 else:
     from .fallback import (
-        batch_cosine_similarity,
         batch_coupling,
         density_estimation,
-        pairwise_distances,
-        void_probe_density,
         memory_step_fused,
+        void_probe_density,
     )
 
 

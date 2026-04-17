@@ -11,15 +11,16 @@ Edge of chaos target: lambda ~ 0 (not too stable, not too chaotic)
 Invented by Joshua R. Thomas, January 2026.
 """
 
-from typing import List, Dict, Tuple, Optional
-from dataclasses import dataclass, field
-import torch
-import math
 import copy
+import math
+from dataclasses import dataclass
+from typing import Dict, List
 
-from .living_memory import LivingMemory
-from .dynamics import LMDDynamics
+import torch
+
 from .config import LMDConfig
+from .dynamics import LMDDynamics
+from .living_memory import LivingMemory
 
 
 @dataclass
