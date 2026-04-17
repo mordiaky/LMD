@@ -281,6 +281,16 @@ class GraftResult:
     novelty_score: float
     coherence_score: float
 
+    @property
+    def novelty(self) -> float:
+        """Alias for novelty_score — matches the public API shown in README examples."""
+        return self.novelty_score
+
+    @property
+    def coherence(self) -> float:
+        """Alias for coherence_score — matches the public API shown in README examples."""
+        return self.coherence_score
+
 
 class IdeaGrafter:
     """Performs graft operations on hierarchical ideas.
@@ -739,8 +749,10 @@ class IdeaGrafter:
         similarities = [comp.similarity(n) for n in neighbors]
         avg_similarity = sum(similarities) / len(similarities)
 
-        # High similarity = high coherence
-        return avg_similarity
+        # High similarity = high coherence. Cosine similarity lives in [-1, 1];
+        # negative values (opposite vectors) are maximally incoherent, so
+        # clamp to [0, 1] to keep the score meaningful as a "coherence".
+        return max(0.0, min(1.0, avg_similarity))
 
     def mutate(
         self,
@@ -809,12 +821,21 @@ class HierarchicalIdeaFactory:
         self,
         embedding: torch.Tensor,
         n_components: int = 3,
-        label: str = ""
+        label: str = "",
+        depth: Optional[int] = None,  # alias for n_components — matches README + tests
     ) -> HierarchicalIdea:
         """Create hierarchical idea from a single embedding.
 
         Decomposes embedding into components via projection onto random bases.
+
+        Args:
+            embedding: Source embedding to decompose.
+            n_components: Number of child components to spawn from the root (default 3).
+            label: Human-readable label propagated to sub-components.
+            depth: Alias for n_components, kept for documented API compatibility.
         """
+        if depth is not None:
+            n_components = depth
         # Root is the main embedding
         root = IdeaComponent(
             id=str(uuid.uuid4())[:8],

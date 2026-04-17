@@ -40,13 +40,23 @@ class TestMemoryMetabolism:
     def system(self, config):
         return LMDToySystem(config)
 
-    def test_energy_decays_naturally(self, system):
-        """Memories lose energy over time when not activated."""
-        memory = system.create_memory(energy=1.0)
+    def test_energy_decays_naturally(self):
+        """Memories lose energy over time when not activated.
+
+        To test pure decay in isolation we construct a config with no
+        spontaneous activation and no mutual sustenance — both of those
+        are background energy sources that otherwise defeat the test.
+        """
+        pure_decay_config = LMDConfig.toy_scale()
+        pure_decay_config.spontaneous_activation_prob = 0.0
+        pure_decay_config.mutual_sustenance_rate = 0.0
+        pure_decay_system = LMDToySystem(pure_decay_config)
+
+        memory = pure_decay_system.create_memory(energy=1.0)
         initial_energy = memory.energy
 
         # Run simulation without activation
-        system.run_simulation(n_steps=50, activation_probability=0.0)
+        pure_decay_system.run_simulation(n_steps=50, activation_probability=0.0)
 
         # Energy should have decayed
         assert memory.energy < initial_energy

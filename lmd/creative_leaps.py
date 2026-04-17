@@ -46,6 +46,16 @@ class CreativeLeap:
         if torch.isnan(self.embedding).any() or torch.isinf(self.embedding).any():
             self.embedding = safe_normalize(torch.randn_like(self.embedding))
 
+    @property
+    def novelty(self) -> float:
+        """Alias for novelty_score — matches the public API shown in README examples."""
+        return self.novelty_score
+
+    @property
+    def coherence(self) -> float:
+        """Coherence derived as the complement of raw novelty, clamped to [0, 1]."""
+        return max(0.0, min(1.0, 1.0 - self.novelty_score))
+
 
 class LeapOperator(ABC):
     """Base class for creative leap operators."""
@@ -583,12 +593,19 @@ class VoidExtrapolator(LeapOperator):
         content_dim: int = 32,
         n_void_probes: int = 50,
         extrapolation_strength: float = 1.5,
-        noise_scale: float = 0.2
+        noise_scale: float = 0.2,
+        n_probes: Optional[int] = None,  # alias for n_void_probes
     ):
         self.content_dim = content_dim
-        self.n_void_probes = n_void_probes
+        # Accept either `n_probes` or `n_void_probes`; `n_probes` wins when provided.
+        self.n_void_probes = n_probes if n_probes is not None else n_void_probes
         self.extrapolation_strength = extrapolation_strength
         self.noise_scale = noise_scale
+
+    @property
+    def n_probes(self) -> int:
+        """Alias for n_void_probes."""
+        return self.n_void_probes
 
     @property
     def leap_type(self) -> LeapType:

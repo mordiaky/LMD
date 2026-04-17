@@ -1092,7 +1092,7 @@ class TestEdgeCasesAndNumericalStability:
 
     def test_zero_vector_normalization(self, config):
         """Zero vectors should be handled safely without division by zero."""
-        from src.brain_v7.algorithms.memory.lmd.safeguards import safe_normalize
+        from lmd.safeguards import safe_normalize
 
         zero_vec = torch.zeros(config.content_dim)
         result = safe_normalize(zero_vec)
