@@ -63,10 +63,11 @@ all = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mordiaky/living-memory-dynamics"
-Documentation = "https://github.com/mordiaky/living-memory-dynamics#readme"
-Repository = "https://github.com/mordiaky/living-memory-dynamics"
-Issues = "https://github.com/mordiaky/living-memory-dynamics/issues"
+Homepage = "https://github.com/mordiaky/LMD"
+Documentation = "https://github.com/mordiaky/LMD#readme"
+Repository = "https://github.com/mordiaky/LMD"
+Issues = "https://github.com/mordiaky/LMD/issues"
+Changelog = "https://github.com/mordiaky/LMD/releases"
 
 [tool.setuptools.packages.find]
 where = ["."]
