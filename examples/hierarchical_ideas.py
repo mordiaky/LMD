@@ -92,12 +92,12 @@ def demo_graft_operations(grafter: IdeaGrafter, dragon: HierarchicalIdea,
 
     # 3. PRUNE - Remove component
     print("\n2.3 PRUNE Operation")
-    print("    Removes a component (and optionally reattaches children)")
+    print("    Removes a component (and its subtree)")
     prune_target = list(dragon.components.keys())[2]
-    result = grafter.prune_component(dragon, prune_target, reattach_children=True)
+    result = grafter.prune_component(dragon, prune_target)
     print(f"    Novelty: {result.novelty:.3f}")
     print(f"    Coherence: {result.coherence:.3f}")
-    print(f"    Component removed, children reattached to parent")
+    print(f"    Component removed")
 
     # 4. MORPH - Blend embeddings
     print("\n2.4 MORPH Operation")
@@ -138,7 +138,7 @@ def demo_merge_ideas(factory: HierarchicalIdeaFactory, content_dim: int):
     print("\nMerging 'fire' and 'water' ideas...")
 
     # Different merge strategies
-    for strategy in ["graft", "blend", "interleave"]:
+    for strategy in ["combine", "graft", "blend"]:
         print(f"\n   Strategy: {strategy}")
         merged = factory.merge(fire, water, strategy=strategy)
         print(f"   Result components: {len(merged.components)}")

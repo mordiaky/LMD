@@ -41,13 +41,14 @@ def main():
         resolution = onset + torch.rand(1).item() * (peak - onset)  # End emotion
 
         memory = LivingMemory(
-            id=f"memory_{i:03d}",
+            id=i,
             content=embedding,
             energy=0.5 + torch.rand(1).item(),  # Random energy 0.5-1.5
             valence=ValenceTrajectory(
                 points=torch.tensor([onset, peak, resolution])
             ),
-            phase=NarrativePhase.SETUP,
+            phase=0.0,  # Starts at phase 0 (SETUP). Phase is a float radian value.
+            label=f"memory_{i:03d}",
         )
         memories.append(memory)
 
@@ -57,12 +58,12 @@ def main():
     print("\n2. Setting up dynamics engine...")
     config = LMDConfig(
         content_dim=content_dim,
-        coupling_strength=0.1,
-        narrative_strength=0.05,
+        coupling_content_weight=0.5,
+        narrative_potential_strength=0.4,
         noise_scale=0.01,
     )
     dynamics = LMDDynamics(config)
-    print(f"   Config: coupling={config.coupling_strength}, noise={config.noise_scale}")
+    print(f"   Config: coupling_content_weight={config.coupling_content_weight}, noise={config.noise_scale}")
 
     # 3. Evolve memories
     print("\n3. Evolving memories...")
@@ -80,7 +81,7 @@ def main():
 
             phases = {}
             for m in memories:
-                phase_name = m.phase.name
+                phase_name = m.narrative_phase.name
                 phases[phase_name] = phases.get(phase_name, 0) + 1
 
             metabolic_states = {}
@@ -96,16 +97,16 @@ def main():
     # 4. Final state
     print("\n4. Final memory states:")
     for m in memories[:5]:  # Show first 5
-        print(f"   {m.id}: energy={m.energy:.2f}, phase={m.phase.name}, "
+        print(f"   {m.id}: energy={m.energy:.2f}, phase={m.narrative_phase.name}, "
               f"state={m.metabolic_state.value}")
     print(f"   ... and {len(memories) - 5} more")
 
     # 5. Find coupled memories
     print("\n5. Finding strongly coupled memories...")
-    coupling_field = dynamics.coupling_field
+    coupling_field = dynamics.coupling
     for i, m1 in enumerate(memories[:5]):
         for j, m2 in enumerate(memories[i+1:i+6], start=i+1):
-            coupling = coupling_field.compute_coupling(m1, m2)
+            coupling = coupling_field.get_coupling(m1, m2)
             if abs(coupling) > 0.1:
                 print(f"   {m1.id} <-> {m2.id}: coupling={coupling:.3f}")
 

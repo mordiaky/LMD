@@ -923,7 +923,8 @@ class HierarchicalIdeaFactory:
         self,
         idea_a: HierarchicalIdea,
         idea_b: HierarchicalIdea,
-        merge_strategy: str = "combine"  # "combine", "graft", "blend"
+        merge_strategy: str = "combine",  # "combine", "graft", "blend"
+        strategy: Optional[str] = None,  # alias for merge_strategy
     ) -> HierarchicalIdea:
         """Merge two hierarchical ideas.
 
@@ -932,6 +933,8 @@ class HierarchicalIdeaFactory:
         - graft: Attach idea_b as subtree of idea_a
         - blend: Blend root embeddings, merge components
         """
+        if strategy is not None:
+            merge_strategy = strategy
         if merge_strategy == "combine":
             # New root from blended embeddings
             new_root_emb = safe_normalize(

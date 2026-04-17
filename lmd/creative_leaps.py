@@ -283,16 +283,22 @@ class ManifoldWalker(LeapOperator):
         n_diffusion_steps: int = 10,
         noise_schedule: str = "linear",  # "linear", "cosine", "exponential"
         density_weight: float = 0.5,
-        temperature: float = 1.0
+        temperature: float = 1.0,
+        n_steps: Optional[int] = None,  # alias for n_diffusion_steps
     ):
         self.content_dim = content_dim
-        self.n_diffusion_steps = n_diffusion_steps
+        self.n_diffusion_steps = n_steps if n_steps is not None else n_diffusion_steps
         self.noise_schedule = noise_schedule
         self.density_weight = density_weight
         self.temperature = temperature
 
         # Precompute noise schedule
         self._betas = self._compute_schedule()
+
+    @property
+    def n_steps(self) -> int:
+        """Alias for n_diffusion_steps."""
+        return self.n_diffusion_steps
 
     @property
     def leap_type(self) -> LeapType:
